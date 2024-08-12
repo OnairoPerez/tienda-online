@@ -1,0 +1,41 @@
+#categorias {
+    margin-block: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#categorias h2 {
+    color: white;
+}
+
+#categorias a {
+    position: relative;
+    margin-inline: 4px;
+}
+
+#categorias div{
+    overflow:auto;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#categorias a div {
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+}
+
+#categorias p {
+    font-size: 18px;
+    color: white;
+    position: absolute;
+    left: 12px;
+    bottom: 8px;
+    margin: 0px;
+}

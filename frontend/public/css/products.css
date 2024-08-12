@@ -1,0 +1,60 @@
+#productos {
+    margin-block: 10px;
+    position: relative;
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#productos div, article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#productos div:nth-child(2) {
+    flex-direction: row;
+    justify-content: unset;
+    overflow: auto;
+}
+
+#productos div {
+    margin: 10px;
+}
+
+#productos article p {
+    text-align: center;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#productos article {
+    height: 260px;
+    width: 200px;
+    background: linear-gradient(90deg, rgb(48, 46, 46) 15%, rgb(28, 28, 28) 100%);
+    border-radius: 20px;
+    margin: 5px;
+}
+
+#productos article img{
+    height: 56%;
+    width: 80%;
+    margin: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+}
+
+#productos article button{
+    width: 100px;
+    height: 30px;
+    border-color: transparent;
+    border-radius: 10px;
+}

@@ -1,0 +1,104 @@
+#formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #302E2E;
+    border-radius: 20px;
+    min-height: 75%;
+    max-height: 90%;
+    height: auto;
+    width: 409px;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    overflow: auto;
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+#formulario button {
+    height: 40px;
+    width: 40%;
+    border-radius: 10px;
+    border-color: transparent;
+    background-color: #695D5D;
+    font-size: 20px;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.sectionform {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    border-color: transparent;
+    margin-block: 8px;
+}
+
+.sectionform input {
+    margin-block: 3px;
+    height: 40px;
+    border-radius: 10px;
+    border-color: transparent;
+    background-color: #D9D9D9;
+    font-size: medium;
+    text-align: center;
+}
+
+#regButton {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#password, #password input {
+    width: 100%;
+    position: relative;
+}
+
+#password input {
+    box-sizing: border-box;
+    height: 46px;
+}
+
+#password button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    padding: 0px;
+}
+
+.sectionform input ::placeholder {
+    color: #868282;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+#fieldset2 > div:nth-child(3) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#fieldset2 > div:nth-child(3) > input {
+    width: 47%;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
