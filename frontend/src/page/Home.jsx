@@ -34,7 +34,7 @@ export default function Home() {
           </div>
           <img loading='lazy' src={banner} alt="Estanterías enfoque central" />
         </section>
-        <Categories categoryData={category}/>
+        <Categories/>
         <HomeProducts dataProducts={product}/>
         <section id="cta">
           <img loading='lazy' src={moneda} alt="Icono de moneda" />
