@@ -42,13 +42,13 @@ export default function RegistrationForm() {
       })
         .then(response => {
           if (response.ok) {
-            window.location.href = "/login"
+            window.location.href = "/login";
           } else {
-            alert("Se ha encotrado errores en la información suministrada")
+            alert("Se ha encotrado errores en la información suministrada");
           }
         })
         .catch(() => {
-          alert("Ha ocurrido un error de registro o el usuario ya existe")
+          alert("Ha ocurrido un error");
         });
     } else {
       alert('La contraseña de confirmación no es correcta');
