@@ -11,13 +11,6 @@ import HomeProducts from '../components/HomeProducts';
 import banner from '../assets/image/banner.webp';
 import moneda from '../assets/image/moneda.webp';
 
-//Datos - Esta infomación se debería obtener de la API
-const category = require('../data/category.js');
-let product = require('../data/products.js');
-
-//Ordenar productos
-product = orderProducts(product);
-
 export default function Home() {
   return (
     <React.StrictMode>
@@ -35,7 +28,7 @@ export default function Home() {
           <img loading='lazy' src={banner} alt="Estanterías enfoque central" />
         </section>
         <Categories/>
-        <HomeProducts dataProducts={product}/>
+        <HomeProducts/>
         <section id="cta">
           <img loading='lazy' src={moneda} alt="Icono de moneda" />
           <div>
@@ -52,10 +45,4 @@ export default function Home() {
       <Footer/>
     </React.StrictMode>
   );
-}
-
-//Obtener los primeros cuatro productos más comprados
-function orderProducts(data) {
-  data.sort((a, b) => b.comprados - a.comprados);
-  return data.slice(0, 4);
 }

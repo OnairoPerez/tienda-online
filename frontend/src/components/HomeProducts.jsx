@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
-export default function HomeProducts({dataProducts}) {
+const URL_API = process.env.REACT_APP_API_URL;
+
+export default function HomeProducts() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(`${URL_API}/api/products/most-purchased`)
+      .then(response => response.json())
+      .then(data => setData(data.documents))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
   return (
     <section id="productos">
       <Helmet>
@@ -17,20 +27,20 @@ export default function HomeProducts({dataProducts}) {
         </p>
       </div>
       <div>
-        {dataProducts.map((product) => (
-          <ProductsCard img={product.image} name={product.nombre}/>
+        {data.map((product) => (
+          <ProductsCard img={product.img} name={product.name} id={product.web_id}/>
         ))}
       </div>
     </section>
   );
 }
 
-function ProductsCard({img, name}) {
+function ProductsCard({img, name, id}) {
   return (
     <article>
       <img loading='lazy' src={img} alt={name} />
       <p>{name}</p>
-      <button>Carrito</button>
+      <button onClick={() => {window.location.href = `/producto?id=${id}`}}>Detalles</button>
     </article>
   );
 }
