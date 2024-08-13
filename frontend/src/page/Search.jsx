@@ -6,10 +6,6 @@ import { Helmet } from 'react-helmet';
 import TopBar from '../components/TopBar';
 import SearchProducts from '../components/SearchProducts';
 
-//Datos
-import products from '../data/products.js';
-import brands from '../data/brands.js';
-
 const URL_API = process.env.REACT_APP_API_URL;
 
 function useQuery() {
@@ -17,29 +13,6 @@ function useQuery() {
   const query = React.useMemo(() => new URLSearchParams(search), [search]);
   return query.get('q')
 }
-
-function orderBrands(products, brands) {
-  let order = [];
-  products.forEach((item) => {
-    let brand = brands.find(brand => brand._id === item.category);
-    if (brand != null && !brands.includes(brand.name)) {
-      order.push(brand.name);
-    }
-  });
-
-  return order;
-}
-
-// let data = {"brands": [], "options": []};
-// //Obtener las marcas de los productos y evitar repeticiones
-// products.forEach((item) => {
-//   let brand = brands.find(brand => brand.id === item.id_marca);
-//   if (brand != null && !data.brands.includes(brand.nombre)) {
-//     data.brands.push(brand.nombre);
-//   }
-// })
-// //Agregar opciones
-// data.options.push("Precio ▲️", "Precio ▼", "Más comprado");
 
 //Genera la sección ordenar
 function Order({title, items}) {

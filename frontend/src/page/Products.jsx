@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 
@@ -6,13 +6,13 @@ import { useLocation } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 
-//Datos - Se debería obtener del servidor
-import products from '../data/products';
+const URL_API = process.env.REACT_APP_API_URL;
 
 //Obtener parámetros de la url
 function useQuery() {
   const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  const query = React.useMemo(() => new URLSearchParams(search), [search]);
+  return query.get('id')
 }
 
 //Formatea un valor numérico para darle una mejor apariencia
@@ -22,8 +22,15 @@ function localPrice(price) {
 }
 
 export default function Products() {
-  let query = useQuery();
-  let product = products.find((item) => item.codigo === query.get('id'));
+  const [product, setProduct] = useState('');
+  let id = useQuery();
+
+  useEffect(() => {
+    fetch(`${URL_API}/api/products/get/${id}`)
+      .then(response => response.json())
+      .then(data => setProduct(data))
+      .catch(error => console.error('Error:', error));
+  }, []);
 
   return (
     <React.StrictMode>
@@ -35,13 +42,14 @@ export default function Products() {
         <section className='flexCenter'>
           <h1>Detalles del producto</h1>
           <div id='container' className='flexCenter'>
-            <img id='imgProducto' src={product.image} alt={product.nombre} />
+            <img id='imgProducto' src={product.img} alt={product.name} />
             <div className='flexCenter'>
-              <h3>{product.nombre}</h3>
-              <span>Precio: {localPrice(product.precio)}</span>
+              <h3>{product.name}</h3>
+              <span>Precio: {localPrice(product.price)}</span>
               <p>
                 Detalle: <br />
-                {product.descripcion}
+                ¿Necesitas abastecer tu despensa o sorprender a alguien con una selección de productos esenciales?.
+                Ofrecemos una variedad de opciones cuidadosamente seleccionadas para satisfacer tus necesidades.
               </p>
               <label htmlFor="inputNum">
                 <span id='inputLabel'>Cantidad</span>
