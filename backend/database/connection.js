@@ -1,4 +1,3 @@
-require('dotenv').config({ path: './backend/database/.env' });
 const mongoose = require('mongoose');
 
 //URI y Opciones para la conexión con MongoDB Atlas (urlencode credentials)

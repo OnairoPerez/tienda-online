@@ -1,7 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
+const URL_APP_REACT = process.env.URL_APP_REACT;
 
 //Modulo database
 require('./database/connection')
@@ -11,6 +15,11 @@ const auth = require('./routers/auth');
 const categories = require('./routers/categories');
 const brands = require('./routers/brands');
 const products = require('./routers/products');
+
+//Configuración de CORS
+app.use(cors({
+  origin: URL_APP_REACT
+}));
 
 //Configuración de routers
 app.use('/api', auth);
