@@ -30,7 +30,7 @@ export default function SearchProducts({data}) {
       </Helmet>
       <div id="Productos">
         {data.map((product) => (
-          <ProductCard img={product.image} code={product.codigo} name={product.nombre} price={product.precio}></ProductCard>
+          <ProductCard img={product.img} code={product.web_id} name={product.name} price={product.price}></ProductCard>
         ))}
       </div>
     </React.StrictMode>

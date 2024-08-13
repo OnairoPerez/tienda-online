@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 //Imágenes
@@ -13,6 +13,8 @@ function handleClick(href) {
 }
 
 export default function TopBar() {
+  const [query, setQuery] = useState('');
+
   return (
     <nav id="TopBar">
         <Helmet>
@@ -22,8 +24,8 @@ export default function TopBar() {
             <img onClick={() => handleClick('/')} loading='lazy' id="logo" src={logo} alt="Logo Autoservicio Popular" />
         </div>
         <div id="center" class="TopBarElements">
-            <input id="SearchInput" type="text" placeholder="Buscar Producto"/>
-            <button onClick={() => handleClick('/buscador')} id="SearchButton">
+            <input id="SearchInput" value={query} onChange={(e) => {setQuery(e.target.value)}} type="text" placeholder="Buscar Producto"/>
+            <button onClick={() => handleClick(`/buscador?q=${query}`)} id="SearchButton">
                 <img loading='lazy' id="SearchImg" src={lupa} alt="Lupa color negro" />
             </button>
         </div>
