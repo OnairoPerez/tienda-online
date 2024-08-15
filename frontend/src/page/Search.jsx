@@ -58,24 +58,6 @@ export default function Search() {
       .catch(error => console.error('Error:', error));
   }, []);
 
-  useEffect(() => {
-    fetch(`${URL_API}/api/brands`)
-      .then(response => response.json())
-      .then(data => {
-        let order = [];
-        products.forEach((item) => {
-          let brand = data.documents.find(brand => brand._id === item.brand);
-          if (brand != null && !order.includes(brand.name)) {
-            order.push(brand.name);
-          }
-        });
-        setBrands(order);
-      })
-      .catch(error => console.error('Error:', error));
-  }, []);
-
-  // setBrands(orderBrands(products, brands));
-
   return (
     <React.StrictMode>
       <Helmet>

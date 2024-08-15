@@ -31,7 +31,7 @@ export default function Categories() {
 function CategoryCard({img, text, value}) {
     return (
         <a href={"/search?c=" + value} className='ctg'>
-            <div style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%), url(/category/${img})`}}></div>
+            <div style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%), url(${img})`}}></div>
             <p>{text}</p>
         </a>
     );
