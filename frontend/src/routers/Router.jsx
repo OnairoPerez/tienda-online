@@ -9,6 +9,7 @@ import RegistrationForm from '../components/RegistrationForm';
 import Search from '../page/Search';
 import ShoppingCart from '../page/ShoppingCart';
 import Products from '../page/Products';
+import User from '../page/User';
 
 export default function router() {
   return (
@@ -19,6 +20,7 @@ export default function router() {
         <Route path='/buscador' element={<Search/>}/>
         <Route path='/carrito' element={<ShoppingCart/>}/>
         <Route path='/producto' element={<Products/>}></Route>
+        <Route path='/usuario' element={<User/>}></Route>
         <Route path='*' element={<p><strong>Error 404</strong> Página no encontrada</p>}/>
     </Routes>
   )
