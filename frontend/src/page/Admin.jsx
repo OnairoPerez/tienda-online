@@ -96,12 +96,34 @@ const LIST_CONTAINER = {
   padding: '10px'
 }
 
-function Item({name, id}) {
+function Item({ name, id }) {
   const DIV = {
-    width:'100%', 
-    background: '#695D5D', 
-    display:'flex', 
-    flexDirection: 'row'
+    width: '100%',
+    background: '#695D5D',
+    display: 'flex',
+    flexDirection: 'row',
+    padding: '10px',
+    boxSizing: 'border-box',
+    marginBlock: '5px',
+    position: 'relative',
+    borderRadius: '10px'
+  }
+
+  const BUTTON = {
+    borderColor: 'transparent',
+    background: 'transparent',
+    color: 'red',
+    position: 'absolute',
+    right: '5px',
+    top: '5px'
+  }
+
+  const SPAN = {
+    fontSize: '18px',
+    width: 'calc(100% - 30px)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   }
 
   const handleClick = () => {
@@ -111,10 +133,10 @@ function Item({name, id}) {
 
   return (
     <div style={DIV}>
-      <span>{name}</span>
-      <button onClick={handleClick}>
-        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <span style={SPAN}>{name}</span>
+      <button onClick={handleClick} style={BUTTON}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M4 7l16 0" />
           <path d="M10 11l0 6" />
           <path d="M14 11l0 6" />
@@ -126,8 +148,8 @@ function Item({name, id}) {
   );
 }
 
-function ProductsAdmin() {
-  const [textView, setTextView] = useState('Más populares - Stock');
+function Admin() {
+  const [textView, setTextView] = useState('Stock bajo');
 
   return (
     <React.StrictMode>
@@ -139,7 +161,7 @@ function ProductsAdmin() {
           <h1>Administración de productos</h1>
         </div>
         <div id="left" style={LEFT}>
-          <img onClick={() => {window.location.href = '/usuario'}} src={user} alt="Icono de usuario" style={{ ...IMG, ...IMG_USER }} />
+          <img onClick={() => { window.location.href = '/usuario' }} src={user} alt="Icono de usuario" style={{ ...IMG, ...IMG_USER }} />
         </div>
       </nav>
       <section style={MAIN}>
@@ -162,7 +184,7 @@ function ProductsAdmin() {
                 </svg>
               </button>
             </div>
-            <div className='list'>
+            <div className='list' style={{ color: 'white' }}>
               <h3>{textView}</h3>
               <hr />
               {products.map(product => (
@@ -179,4 +201,4 @@ function ProductsAdmin() {
   )
 }
 
-export default ProductsAdmin
+export default Admin

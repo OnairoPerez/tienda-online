@@ -10,7 +10,7 @@ import Search from '../page/Search';
 import ShoppingCart from '../page/ShoppingCart';
 import Products from '../page/Products';
 import User from '../page/User';
-import ProductsAdmin from '../page/ProductsAdmin';
+import Admin from '../page/Admin';
 
 export default function router() {
   return (
@@ -22,7 +22,7 @@ export default function router() {
         <Route path='/carrito' element={<ShoppingCart/>}/>
         <Route path='/producto' element={<Products/>}></Route>
         <Route path='/usuario' element={<User/>}></Route>
-        <Route path='/admin' element={<ProductsAdmin/>}></Route>
+        <Route path='/admin' element={<Admin/>}></Route>
         <Route path='*' element={<p><strong>Error 404</strong> Página no encontrada</p>}/>
     </Routes>
   )
