@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 
 //Imágenes
 import logo from '../assets/image/logo.webp';
@@ -15,6 +15,21 @@ const products = [
     name: 'Arroz roa'
   }
 ]
+
+//Constantes
+const context = {
+  'products' : 1,
+  'categories': 2,
+  'brands': 3,
+  'users': 4
+}
+const textContext = {
+  1: 'Pocas existencias',
+  2: 'Categorias populares',
+  3: 'Marcas populares',
+  4: 'Usuarios registrados',
+  5: 'Resultados'
+}
 
 //Estilos css
 const NAV = {
@@ -73,7 +88,6 @@ const BUTTONS = {
   width: '120px',
   borderColor: 'transparent',
   borderRadius: '10px',
-  background: '#332f2f',
   color: 'white',
   fontSize: '18px',
   fontWeight: 'bold',
@@ -96,6 +110,9 @@ const LIST_CONTAINER = {
   padding: '10px'
 }
 
+//Establecer datos de forma global para los componentes
+const DataContext = createContext();
+
 function Item({ name, id }) {
   const DIV = {
     width: '100%',
@@ -106,16 +123,14 @@ function Item({ name, id }) {
     boxSizing: 'border-box',
     marginBlock: '5px',
     position: 'relative',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    alignItems: 'center'
   }
 
   const BUTTON = {
     borderColor: 'transparent',
     background: 'transparent',
-    color: 'red',
-    position: 'absolute',
-    right: '5px',
-    top: '5px'
+    color: 'red'
   }
 
   const SPAN = {
@@ -148,8 +163,117 @@ function Item({ name, id }) {
   );
 }
 
+function ControlButtons({ context, children }) {
+  //Obtener datos globales
+  const {status, setStatus, setTextView} = useContext(DataContext);
+
+  //funciones 
+  const handleStatus = () => {
+    setStatus(context);
+    setTextView(textContext[context])
+  }
+
+  return (
+    <button 
+      style={{...BUTTONS, background: status === context ? '#4d4d4d' :  '#332f2f'}}
+      onClick={handleStatus}
+    >
+      {children}
+    </button>
+  )
+}
+
+function FormProducts() {
+  const BUTTON = {
+    width: '120px',
+    height: '40px',
+    background: '#695D5D',
+    borderRadius: '10px',
+    color: 'white',
+    borderColor: 'transparent',
+    fontSize: '20px',
+    fontFamily: 'Roboto',
+    fontWeight: '700',
+    marginTop: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '20px'
+  }
+  const IMG = {
+    width: '250px',
+    height: '250px',
+    objectFit: 'cover',
+    borderRadius: '20px'
+  }
+  const RIGHT = {
+    width: '40%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }
+  const LEFT = {
+    width:'60%', 
+    height:'100%'
+  }
+  const LABEL = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '75%'
+  }
+  const TEXT_INPUT = {
+    height: '24px',
+    marginBlock: '5px',
+    borderRadius: '10px',
+    borderColor: 'transparent',
+    fontSize: '16px',
+    paddingInline: '6px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  }
+  const SPAN = {
+    fontSize: '18px',
+    marginTop: '5px'
+  }
+
+  return (
+    <React.StrictMode>
+      <div style={LEFT}>
+
+      </div>
+
+      <div style={RIGHT}>
+        <img src="https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg" alt="Imagen del producto" style={IMG} />
+        <label style={BUTTON} htmlFor="inputImg">
+          <span>Seleccionar</span>
+          <input style={{display:'none'}} id='inputImg' type="file" accept='image/*' />
+        </label>
+
+        <label htmlFor="searchBrands" style={LABEL}>
+          <span style={SPAN}>Marca</span>
+          <input id='searchBrands' type="text" list='brands' style={TEXT_INPUT}/>
+        </label>
+        <label htmlFor="searchCategories" style={LABEL}>
+          <span style={SPAN}>Categoria</span>
+          <input id='searchCategories' type="text" list='categories' style={TEXT_INPUT} />
+        </label>
+
+        <datalist id='brands'>
+          <option value={'Roa'} />
+        </datalist>
+        <datalist id='categories'>
+          <option value={'Grano'} />
+        </datalist>
+      </div>
+    </React.StrictMode>
+  );
+}
+
 function Admin() {
-  const [textView, setTextView] = useState('Stock bajo');
+  const [textView, setTextView] = useState(textContext[1]);
+  const [status, setStatus] = useState(context.products);
 
   return (
     <React.StrictMode>
@@ -167,16 +291,19 @@ function Admin() {
       <section style={MAIN}>
         <div style={MENU_BAR}>
           <div>
-            <button style={BUTTONS}>Productos</button>
-            <button style={BUTTONS}>Categorias</button>
-            <button style={BUTTONS}>Usuarios</button>
+            <DataContext.Provider value={{ status: status, setStatus: setStatus, setTextView: setTextView }}>
+              <ControlButtons context={context.categories} >Categorias</ControlButtons>
+              <ControlButtons context={context.brands} >Marcas</ControlButtons>
+              <ControlButtons context={context.products} >Productos</ControlButtons>
+              <ControlButtons context={context.users} >Usuarios</ControlButtons>
+            </DataContext.Provider>
           </div>
         </div>
         <div style={ITEM_LIST}>
           <div style={LIST_CONTAINER}>
             <div className='search' style={{ display: 'grid', gridTemplateColumns: '1fr 38px', gridTemplateRows: '1fr', margin: '10px' }}>
               <input type="text" placeholder='Buscar' style={{ borderRadius: '10px', marginInline: '10px', textAlign: 'center', fontSize: '16px', fontWeight: 'bold' }} />
-              <button style={{ borderRadius: '10px' }}>
+              <button onClick={() => {setTextView(textContext[5])}} style={{ borderRadius: '10px' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-search">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
@@ -193,8 +320,8 @@ function Admin() {
             </div>
           </div>
         </div>
-        <div style={{ gridArea: 'view' }}>
-
+        <div style={{ gridArea: 'view', display: 'flex', flexDirection: 'row', color: 'white' }}>
+          <FormProducts/>
         </div>
       </section>
     </React.StrictMode>
