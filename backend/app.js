@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 4000;
 const URL_APP_REACT = process.env.URL_APP_REACT;
 
 //Modulo database
-require('./database/connection')
+const connectDB = require('../backend/database/connection');
+connectDB();
 
 //Routers
 const auth = require('./routers/auth');
@@ -41,3 +42,5 @@ app.listen(PORT, () => {
     -----------------------`
   );
 });
+
+module.exports = app;
