@@ -114,7 +114,12 @@ router.post('/account/register', async (req, res) => {
     account.save()
       .then(document => {
         if(document) {
-          res.send(sms('Account registered correctly'));
+          let message = {
+            ...sms('Account registered correctly'),
+            user_id: docUser._id
+          }
+
+          res.send(message);
         }
       })
       .catch((error) => {
@@ -146,7 +151,11 @@ router.post('/account/register', async (req, res) => {
       let secondDoc = await account.save();
 
       if(firtsDoc && secondDoc) {
-        res.send(sms('successful save'));
+        let message = {
+          ...sms('successful save'),
+          user_id: firtsDoc._id
+        }
+        res.send(message);
       }
     } catch (error) {
       res.status(500).send(sms('Internal Server Error'));
@@ -202,12 +211,75 @@ router.post('/new-user' , async (req, res) => {
     //Creamos y guardamos un usuario
     const user = newUser(body);
     const document = user.save()
+      .then(doc => {
+        if (doc) {
+          let message = {
+            ...sms('successful save'),
+            user_id: document._id
+          };
+          
+          res.send(message);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     if(document) {
-      res.send(sms('successful save'));
+      let message = sms('successful save');
+      message.user.id = document._id;
+      res.send();
     }
   } catch {
     res.status(500).send(sms('Internal Server Error'));
+  }
+});
+
+router.put("/update-user", (req, res) => {
+  let body = req.body;
+  let data = body.data;
+  let userID = body.user.id;
+
+  //Comprobar si el identificador está incluido en el cuerpo de la petición
+  if (check(userID) && userID.length ===  24) {
+    res.status(400).send(sms('Missing or incorrect data (user.id)'));
+    return;
+  }
+
+  //Comprobar si se adjuntaron datos en la petición
+  if (data == undefined) {
+    res.status(400).send(sms('You must use (data) to specify the properties to update'));
+  }
+
+  //Definimos las propiedades que puede contener el objeto enviado por el cliente
+  let properties = ['name', 'surname', 'cc', 'address', 'city', 'tel'];
+  let verify = [];
+
+  //Guardamos las comprobaciones en un arreglo
+  for (const [key, value] of Object.entries(data)) {
+    verify.push(properties.includes(key));
+    verify.push(!check(value));
+  }
+
+  //Si las propiedad son correcta se realiza la actualización
+  if (verify.every(Boolean)) {
+    User.findOneAndUpdate({ _id: userID }, data, { new: true })
+      .then(doc => {
+        if (!doc) {
+          res.status(404).send(sms('No user was found with that ID'));
+        } else {
+          let message = {
+            ...sms('Successfully updated user'),
+            document: doc
+          } ;
+          
+          res.send(message);
+        }
+      })
+      .catch(err => {
+        res.status(500).send(sms('Internal Server Error'));
+        console.log(err);
+      });
   }
 });
 
