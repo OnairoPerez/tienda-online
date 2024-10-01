@@ -13,6 +13,7 @@ describe('Productos', () => {
 
   //Conectar la base de datos
   before(async function() {
+    this.timeout(10000);
     await connectDB();
   });
 
