@@ -235,7 +235,7 @@ router.post('/new-user' , async (req, res) => {
   }
 });
 
-router.put("/update-user", (req, res) => {
+router.patch("/update-user", (req, res) => {
   let body = req.body;
   let data = body.data;
   let userID = body.user.id;
